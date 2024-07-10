@@ -4,14 +4,18 @@ on:
         branches:
             - master
             - main
+    workflow_dispatch:
+
 jobs:
     coverage:
         runs-on: ubuntu-latest
         steps:
           - name: Generate coverage
-            run: pytest --cov-report xml:path/to/coverage.xml
+            run: |
+              python -m pip install pytest
+              python -m pytest --cov-report xml:coverage.xml
           - name: Get Cover 
             uses: orgoro/coverage@v3.1
             with:
-                coverageFile: path/to/coverage.xml
+                coverageFile: coverage.xml
                 token: ${{ secrets.GITHUB_TOKEN }}
